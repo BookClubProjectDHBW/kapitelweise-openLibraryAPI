@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "title",
         "author",
         "ISBN",
-        "page"
 })
 @Generated("jsonschema2pojo")
 public class BookSearchRequest {
@@ -30,8 +29,7 @@ public class BookSearchRequest {
     private String author;
     @JsonProperty("ISBN")
     private String isbn;
-    @JsonProperty("page")
-    private String page;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -42,13 +40,12 @@ public class BookSearchRequest {
     public BookSearchRequest() {
     }
 
-    public BookSearchRequest(String q, String title, String author, String isbn, String page) {
+    public BookSearchRequest(String q, String title, String author, String isbn) {
         super();
         this.q = q;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.page = page;
     }
 
     @JsonProperty("q")
@@ -91,15 +88,6 @@ public class BookSearchRequest {
         this.isbn = isbn;
     }
 
-    @JsonProperty("page")
-    public String getPage() {
-        return page;
-    }
-
-    @JsonProperty("page")
-    public void setPage(String page) {
-        this.page = page;
-    }
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
@@ -130,10 +118,6 @@ public class BookSearchRequest {
         sb.append("isbn");
         sb.append('=');
         sb.append(((this.isbn == null)?"<null>":this.isbn));
-        sb.append(',');
-        sb.append("page");
-        sb.append('=');
-        sb.append(((this.page == null)?"<null>":this.page));
         sb.append(',');
         sb.append("additionalProperties");
         sb.append('=');
