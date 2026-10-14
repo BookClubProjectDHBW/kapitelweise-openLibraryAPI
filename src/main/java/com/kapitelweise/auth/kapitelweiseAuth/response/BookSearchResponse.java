@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.kapitelweise.auth.kapitelweiseAuth.domain.books;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -18,14 +19,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "docs"
 })
 @Generated("jsonschema2pojo")
-public class BookClubResponse {
+public class BookSearchResponse {
 
     @JsonProperty("start")
     private Integer start;
     @JsonProperty("num_found")
     private Integer numFound;
     @JsonProperty("docs")
-    private List<Object> docs;
+    private List<books> docs;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -33,10 +34,10 @@ public class BookClubResponse {
      * No args constructor for use in serialization
      *
      */
-    public BookClubResponse() {
+    public BookSearchResponse() {
     }
 
-    public BookClubResponse(Integer start, Integer numFound, List<Object> docs) {
+    public BookSearchResponse(Integer start, Integer numFound, List<books> docs) {
         super();
         this.start = start;
         this.numFound = numFound;
@@ -64,12 +65,12 @@ public class BookClubResponse {
     }
 
     @JsonProperty("docs")
-    public List<Object> getDocs() {
+    public List<books> getDocs() {
         return docs;
     }
 
     @JsonProperty("docs")
-    public void setDocs(List<Object> docs) {
+    public void setDocs(List<books> docs) {
         this.docs = docs;
     }
 
@@ -86,7 +87,7 @@ public class BookClubResponse {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(BookClubResponse.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(BookSearchResponse.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("start");
         sb.append('=');
         sb.append(((this.start == null)?"<null>":this.start));

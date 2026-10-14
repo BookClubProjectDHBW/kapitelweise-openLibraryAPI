@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // der Auth-Service hat nur öffentliche Endpunkte, alles andere wird gesperrt
-                        .requestMatchers("/login", "/register", "/error").permitAll()
+                        .requestMatchers("/bookSearch").permitAll()
                         .anyRequest().denyAll())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(
