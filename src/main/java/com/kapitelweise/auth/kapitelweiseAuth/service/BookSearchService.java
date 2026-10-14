@@ -25,7 +25,6 @@ public class BookSearchService {
                     addIfPresent(uri, "title", request.getTitle());
                     addIfPresent(uri, "author", request.getAuthor());
                     addIfPresent(uri, "isbn", request.getIsbn());
-                    addIfPresent(uri, "page", request.getPage());
 
 
                     return uri.build();

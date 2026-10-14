@@ -1,6 +1,7 @@
 package com.kapitelweise.auth.kapitelweiseAuth.domain;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -12,25 +13,40 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "q",
+        "cover_i",
+        "has_fulltext",
+        "edition_count",
         "title",
-        "author",
-        "ISBN",
-        "page"
+        "author_name",
+        "first_publish_year",
+        "key",
+        "ia",
+        "author_key",
+        "public_scan_b"
 })
 @Generated("jsonschema2pojo")
 public class books {
 
-    @JsonProperty("q")
-    private String q;
+    @JsonProperty("cover_i")
+    private Integer coverI;
+    @JsonProperty("has_fulltext")
+    private Boolean hasFulltext;
+    @JsonProperty("edition_count")
+    private Integer editionCount;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("author")
-    private String author;
-    @JsonProperty("ISBN")
-    private String isbn;
-    @JsonProperty("page")
-    private String page;
+    @JsonProperty("author_name")
+    private List<String> authorName;
+    @JsonProperty("first_publish_year")
+    private Integer firstPublishYear;
+    @JsonProperty("key")
+    private String key;
+    @JsonProperty("ia")
+    private List<String> ia;
+    @JsonProperty("author_key")
+    private List<String> authorKey;
+    @JsonProperty("public_scan_b")
+    private Boolean publicScanB;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -41,23 +57,48 @@ public class books {
     public books() {
     }
 
-    public books(String q, String title, String author, String isbn, String page) {
+    public books(Integer coverI, Boolean hasFulltext, Integer editionCount, String title, List<String> authorName, Integer firstPublishYear, String key, List<String> ia, List<String> authorKey, Boolean publicScanB) {
         super();
-        this.q = q;
+        this.coverI = coverI;
+        this.hasFulltext = hasFulltext;
+        this.editionCount = editionCount;
         this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.page = page;
+        this.authorName = authorName;
+        this.firstPublishYear = firstPublishYear;
+        this.key = key;
+        this.ia = ia;
+        this.authorKey = authorKey;
+        this.publicScanB = publicScanB;
     }
 
-    @JsonProperty("q")
-    public String getQ() {
-        return q;
+    @JsonProperty("cover_i")
+    public Integer getCoverI() {
+        return coverI;
     }
 
-    @JsonProperty("q")
-    public void setQ(String q) {
-        this.q = q;
+    @JsonProperty("cover_i")
+    public void setCoverI(Integer coverI) {
+        this.coverI = coverI;
+    }
+
+    @JsonProperty("has_fulltext")
+    public Boolean getHasFulltext() {
+        return hasFulltext;
+    }
+
+    @JsonProperty("has_fulltext")
+    public void setHasFulltext(Boolean hasFulltext) {
+        this.hasFulltext = hasFulltext;
+    }
+
+    @JsonProperty("edition_count")
+    public Integer getEditionCount() {
+        return editionCount;
+    }
+
+    @JsonProperty("edition_count")
+    public void setEditionCount(Integer editionCount) {
+        this.editionCount = editionCount;
     }
 
     @JsonProperty("title")
@@ -70,34 +111,64 @@ public class books {
         this.title = title;
     }
 
-    @JsonProperty("author")
-    public String getAuthor() {
-        return author;
+    @JsonProperty("author_name")
+    public List<String> getAuthorName() {
+        return authorName;
     }
 
-    @JsonProperty("author")
-    public void setAuthor(String author) {
-        this.author = author;
+    @JsonProperty("author_name")
+    public void setAuthorName(List<String> authorName) {
+        this.authorName = authorName;
     }
 
-    @JsonProperty("ISBN")
-    public String getIsbn() {
-        return isbn;
+    @JsonProperty("first_publish_year")
+    public Integer getFirstPublishYear() {
+        return firstPublishYear;
     }
 
-    @JsonProperty("ISBN")
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    @JsonProperty("first_publish_year")
+    public void setFirstPublishYear(Integer firstPublishYear) {
+        this.firstPublishYear = firstPublishYear;
     }
 
-    @JsonProperty("page")
-    public String getPage() {
-        return page;
+    @JsonProperty("key")
+    public String getKey() {
+        return key;
     }
 
-    @JsonProperty("page")
-    public void setPage(String page) {
-        this.page = page;
+    @JsonProperty("key")
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @JsonProperty("ia")
+    public List<String> getIa() {
+        return ia;
+    }
+
+    @JsonProperty("ia")
+    public void setIa(List<String> ia) {
+        this.ia = ia;
+    }
+
+    @JsonProperty("author_key")
+    public List<String> getAuthorKey() {
+        return authorKey;
+    }
+
+    @JsonProperty("author_key")
+    public void setAuthorKey(List<String> authorKey) {
+        this.authorKey = authorKey;
+    }
+
+    @JsonProperty("public_scan_b")
+    public Boolean getPublicScanB() {
+        return publicScanB;
+    }
+
+    @JsonProperty("public_scan_b")
+    public void setPublicScanB(Boolean publicScanB) {
+        this.publicScanB = publicScanB;
     }
 
     @JsonAnyGetter
@@ -114,25 +185,45 @@ public class books {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(books.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("q");
+        sb.append("coverI");
         sb.append('=');
-        sb.append(((this.q == null)?"<null>":this.q));
+        sb.append(((this.coverI == null)?"<null>":this.coverI));
+        sb.append(',');
+        sb.append("hasFulltext");
+        sb.append('=');
+        sb.append(((this.hasFulltext == null)?"<null>":this.hasFulltext));
+        sb.append(',');
+        sb.append("editionCount");
+        sb.append('=');
+        sb.append(((this.editionCount == null)?"<null>":this.editionCount));
         sb.append(',');
         sb.append("title");
         sb.append('=');
         sb.append(((this.title == null)?"<null>":this.title));
         sb.append(',');
-        sb.append("author");
+        sb.append("authorName");
         sb.append('=');
-        sb.append(((this.author == null)?"<null>":this.author));
+        sb.append(((this.authorName == null)?"<null>":this.authorName));
         sb.append(',');
-        sb.append("isbn");
+        sb.append("firstPublishYear");
         sb.append('=');
-        sb.append(((this.isbn == null)?"<null>":this.isbn));
+        sb.append(((this.firstPublishYear == null)?"<null>":this.firstPublishYear));
         sb.append(',');
-        sb.append("page");
+        sb.append("key");
         sb.append('=');
-        sb.append(((this.page == null)?"<null>":this.page));
+        sb.append(((this.key == null)?"<null>":this.key));
+        sb.append(',');
+        sb.append("ia");
+        sb.append('=');
+        sb.append(((this.ia == null)?"<null>":this.ia));
+        sb.append(',');
+        sb.append("authorKey");
+        sb.append('=');
+        sb.append(((this.authorKey == null)?"<null>":this.authorKey));
+        sb.append(',');
+        sb.append("publicScanB");
+        sb.append('=');
+        sb.append(((this.publicScanB == null)?"<null>":this.publicScanB));
         sb.append(',');
         sb.append("additionalProperties");
         sb.append('=');
