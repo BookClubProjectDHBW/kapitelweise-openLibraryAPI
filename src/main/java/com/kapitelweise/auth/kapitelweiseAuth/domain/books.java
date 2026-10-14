@@ -1,4 +1,4 @@
 package com.kapitelweise.auth.kapitelweiseAuth.domain;
 
-public class bookSearch {
+public class books {
 }

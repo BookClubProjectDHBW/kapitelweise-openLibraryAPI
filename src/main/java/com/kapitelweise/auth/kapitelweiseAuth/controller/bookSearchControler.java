@@ -17,7 +17,7 @@ public class bookSearchControler {
 
 
     @GetMapping("/bookSearch")
-    public BookSearchResponse bookSearch(BookSearchRequest request) {
+    public BookSearchResponse getBookSearch(BookSearchRequest request) {
         return bookSearchService.searchBooks(request);
     }
 
