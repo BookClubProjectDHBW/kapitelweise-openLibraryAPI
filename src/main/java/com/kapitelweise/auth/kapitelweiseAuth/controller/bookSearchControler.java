@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class bookSearchControler {
 
     private final BookSearchService bookSearchService;
-
     public bookSearchControler(BookSearchService bookSearchService) {
         this.bookSearchService = bookSearchService;
     }

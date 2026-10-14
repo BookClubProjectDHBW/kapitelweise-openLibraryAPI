@@ -7,11 +7,13 @@ import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"ia", "ia_collection"})
 @JsonPropertyOrder({
         "cover_i",
         "has_fulltext",
@@ -20,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "author_name",
         "first_publish_year",
         "key",
-        "ia",
         "author_key",
         "public_scan_b"
 })
@@ -41,12 +42,11 @@ public class books {
     private Integer firstPublishYear;
     @JsonProperty("key")
     private String key;
-    @JsonProperty("ia")
-    private List<String> ia;
     @JsonProperty("author_key")
     private List<String> authorKey;
     @JsonProperty("public_scan_b")
     private Boolean publicScanB;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -57,7 +57,7 @@ public class books {
     public books() {
     }
 
-    public books(Integer coverI, Boolean hasFulltext, Integer editionCount, String title, List<String> authorName, Integer firstPublishYear, String key, List<String> ia, List<String> authorKey, Boolean publicScanB) {
+    public books(Integer coverI, Boolean hasFulltext, Integer editionCount, String title, List<String> authorName, Integer firstPublishYear, String key, List<String> authorKey, Boolean publicScanB) {
         super();
         this.coverI = coverI;
         this.hasFulltext = hasFulltext;
@@ -66,7 +66,6 @@ public class books {
         this.authorName = authorName;
         this.firstPublishYear = firstPublishYear;
         this.key = key;
-        this.ia = ia;
         this.authorKey = authorKey;
         this.publicScanB = publicScanB;
     }
@@ -141,15 +140,6 @@ public class books {
         this.key = key;
     }
 
-    @JsonProperty("ia")
-    public List<String> getIa() {
-        return ia;
-    }
-
-    @JsonProperty("ia")
-    public void setIa(List<String> ia) {
-        this.ia = ia;
-    }
 
     @JsonProperty("author_key")
     public List<String> getAuthorKey() {
@@ -212,10 +202,6 @@ public class books {
         sb.append("key");
         sb.append('=');
         sb.append(((this.key == null)?"<null>":this.key));
-        sb.append(',');
-        sb.append("ia");
-        sb.append('=');
-        sb.append(((this.ia == null)?"<null>":this.ia));
         sb.append(',');
         sb.append("authorKey");
         sb.append('=');
