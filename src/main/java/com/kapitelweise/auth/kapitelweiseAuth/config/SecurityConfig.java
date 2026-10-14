@@ -1,5 +1,6 @@
 package com.kapitelweise.auth.kapitelweiseAuth.config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .logout(logout -> logout.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         // der Auth-Service hat nur öffentliche Endpunkte, alles andere wird gesperrt
                         .requestMatchers("/bookSearch").permitAll()
                         .anyRequest().denyAll())
@@ -70,7 +72,6 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration c
     }
 
 }
-
 
 
 

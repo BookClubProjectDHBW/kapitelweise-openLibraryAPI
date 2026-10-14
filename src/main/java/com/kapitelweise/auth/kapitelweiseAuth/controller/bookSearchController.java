@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class bookSearchControler {
+public class bookSearchController {
 
     private final BookSearchService bookSearchService;
-    public bookSearchControler(BookSearchService bookSearchService) {
+    public bookSearchController(BookSearchService bookSearchService) {
         this.bookSearchService = bookSearchService;
     }
 
