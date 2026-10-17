@@ -1,5 +1,7 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.service;
 
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.bookSearchDao;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.domain.books;
 import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.request.BookSearchRequest;
 import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookSearchResponse;
 import org.slf4j.Logger;
@@ -19,6 +21,12 @@ import java.time.Duration;
 @Service
 public class BookSearchService {
 
+    private final bookSearchDao bookSearchDao;
+
+    public BookSearchService(bookSearchDao bookSearchDao) {
+        this.bookSearchDao = bookSearchDao;
+    }
+
 
     private final RestClient restClient = RestClient.builder()
             .requestFactory(requestFactory())
@@ -30,13 +38,13 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
 
     public BookSearchResponse searchBooks(BookSearchRequest request) {
        try {
-           return restClient.get()
+           BookSearchResponse response = restClient.get()
                    .uri(uriBuilder -> {
                        var uri = uriBuilder
                                .scheme("https")
                                .host("openlibrary.org")
                                .path("/search.json")
-                               .queryParam("limit", 1)
+                               .queryParam("limit", 10)
                                .queryParam("language", lang);
 
                        addIfPresent(uri, "q", request.getQ());
@@ -52,12 +60,33 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                    })
                    .retrieve()
                    .body(BookSearchResponse.class);
+
+
+
+           //Ruft DAO auf
+           if (response != null && response.getDocs() != null) {
+               for (books book : response.getDocs()) {
+                   if (book.getTitle() == null || book.getTitle().isBlank()) {
+                       continue;
+                   }
+                   bookSearchDao.saveBookSuggestions(
+                           book.getTitle(),
+                           book.getAuthorName() == null || book.getAuthorName().isEmpty()
+                           ? null
+                           : book.getAuthorName().get(0),
+                           book.getIsbn() == null || book.getIsbn().isEmpty()
+                           ? null
+                           : book.getIsbn().get(0),
+                           book.getNumberOfPagesMedian(),
+                           book.getFirstPublishYear()
+                   );
+               }
+           }
+           return response;
        }
        catch(ResourceAccessException e){
            throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "OpenLibrary  not found");
        }
-
-
     }
 
 private void addIfPresent(UriBuilder uri, String param, String value){

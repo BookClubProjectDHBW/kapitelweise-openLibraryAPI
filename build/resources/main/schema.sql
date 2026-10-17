@@ -2,10 +2,10 @@
 
 CREATE TABLE IF NOT EXISTS book_suggestions (
                       book_suggestion_id           BIGSERIAL PRIMARY KEY,
-                      title              VARCHAR(45) NOT NULL,
-                      author             VARCHAR(75) NOT NULL,
-                      isbn               VARCHAR(45) NOT NULL UNIQUE,
+                      title              VARCHAR(45) NOT NUll,
+                      author             VARCHAR(75),
+                      isbn               VARCHAR(45) UNIQUE,
                       pages              INT,
-                      year_of_publishing DATE
+                      year_of_publishing INT
 );
 
