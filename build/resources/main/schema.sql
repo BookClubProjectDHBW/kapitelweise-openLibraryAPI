@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS book_suggestions (
                       author             VARCHAR(75),
                       isbn               VARCHAR(45) UNIQUE,
                       pages              INT,
-                      year_of_publishing INT
+                      year_of_publishing INT,
+                      saved_at TIMESTAMPZ NOT NULL
 );
 
