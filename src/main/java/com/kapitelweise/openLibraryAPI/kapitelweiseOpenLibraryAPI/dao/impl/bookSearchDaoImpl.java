@@ -14,6 +14,7 @@ public class bookSearchDaoImpl implements bookSearchDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public void saveBookSuggestions(String title, String author, String isbn, Integer pages, Integer years_of_publication){
         String sql = """
                 insert into book_suggestions
@@ -31,7 +32,16 @@ public class bookSearchDaoImpl implements bookSearchDao {
                 years_of_publication
         );
     }
+
+    @Override
+    public void deleteSuggestions() {
+        jdbcTemplate.update("""
+            DELETE FROM book_suggestions WHERE saved_at < NOW() - INTERVAL '30 minutes'
+            """);
+    }
+
 }
+
 
 
 

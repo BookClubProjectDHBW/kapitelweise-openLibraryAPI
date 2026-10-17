@@ -1,22 +1,26 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.service;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.bookSearchDao;
+
 import org.springframework.scheduling.annotation.Scheduled;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class BookSuggestionDelete {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final bookSearchDao bookSearchDao;
 
-    public BookSuggestionDelete(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public BookSuggestionDelete(bookSearchDao bookSearchDao) {
+        this.bookSearchDao = bookSearchDao;
     }
 
+    // fixedRate: alle 60.000 Millisekunden wird das ausgeführt und geschaut ob ein Wert älter als 30 Minuten ist.
     @Scheduled(fixedRate = 60000)
-    public void deleteSuggestions() {
-        jdbcTemplate.update("""
-            DELETE FROM book_suggestions WHERE saved_at < NOW() - INTERVAL '20 minutes'
-            """);
+    public void deleteBookSuggestions() {
+        bookSearchDao.deleteSuggestions();
     }
+
 
 
 }
