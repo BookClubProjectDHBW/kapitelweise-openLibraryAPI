@@ -36,7 +36,7 @@ public class bookSearchDaoImpl implements bookSearchDao {
     @Override
     public void deleteSuggestions() {
         jdbcTemplate.update("""
-            DELETE FROM book_suggestions WHERE saved_at < NOW() - INTERVAL '30 minutes'
+            DELETE FROM book_suggestions WHERE saved_at < NOW() - INTERVAL '1 minutes'
             """);
     }
 

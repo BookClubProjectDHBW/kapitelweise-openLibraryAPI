@@ -45,7 +45,8 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                                .host("openlibrary.org")
                                .path("/search.json")
                                .queryParam("limit", 10)
-                               .queryParam("language", lang);
+                               .queryParam("language", lang)
+                               .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,editions,editions.isbn");
 
                        addIfPresent(uri, "q", request.getQ());
                        addIfPresent(uri, "title", request.getTitle());
@@ -61,8 +62,6 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                    .retrieve()
                    .body(BookSearchResponse.class);
 
-
-
            //Ruft DAO auf
            if (response != null && response.getDocs() != null) {
                for (books book : response.getDocs()) {
@@ -74,9 +73,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                            book.getAuthorName() == null || book.getAuthorName().isEmpty()
                            ? null
                            : book.getAuthorName().get(0),
-                           book.getIsbn() == null || book.getIsbn().isEmpty()
-                           ? null
-                           : book.getIsbn().get(0),
+                           firstEditionIsbn(book),
                            book.getNumberOfPagesMedian(),
                            book.getFirstPublishYear()
                    );
@@ -87,6 +84,18 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
        catch(ResourceAccessException e){
            throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "OpenLibrary  not found");
        }
+    }
+
+    private String firstEditionIsbn(books book) {
+        if (book.getEditions() == null || book.getEditions().getDocs() == null) {
+            return null;
+        }
+        for (var edition : book.getEditions().getDocs()) {
+            if (edition.getIsbn() != null && !edition.getIsbn().isEmpty()) {
+                return edition.getIsbn().get(0);
+            }
+        }
+        return null;
     }
 
 private void addIfPresent(UriBuilder uri, String param, String value){

@@ -40,6 +40,8 @@ public class books {
     private String title;
     @JsonProperty("isbn")
     private List<String> isbn;
+    @JsonProperty("editions")
+    private Editions editions;
     @JsonProperty("number_of_pages_median")
     private Integer numberOfPagesMedian;
     @JsonProperty("author_name")
@@ -126,6 +128,16 @@ public class books {
     @JsonProperty("isbn")
     public void setIsbn(List<String> isbn) {
         this.isbn = isbn;
+    }
+
+    @JsonProperty("editions")
+    public Editions getEditions() {
+        return editions;
+    }
+
+    @JsonProperty("editions")
+    public void setEditions(Editions editions) {
+        this.editions = editions;
     }
 
     @JsonProperty("number_of_pages_median")
