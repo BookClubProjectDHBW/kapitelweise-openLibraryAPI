@@ -65,7 +65,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
            //Ruft DAO auf
            if (response != null && response.getDocs() != null) {
                for (books book : response.getDocs()) {
-                   if (book.getTitle() == null || book.getTitle().isBlank()) {
+                   if (book.getTitle() == null || book.getTitle().isBlank() || firstEditionIsbn(book) == null || firstEditionIsbn(book).isBlank()) {
                        continue;
                    }
                    bookSearchDao.saveBookSuggestions(
