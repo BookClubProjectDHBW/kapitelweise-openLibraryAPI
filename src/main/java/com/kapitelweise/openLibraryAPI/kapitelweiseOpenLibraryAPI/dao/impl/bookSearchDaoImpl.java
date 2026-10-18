@@ -15,14 +15,14 @@ public class bookSearchDaoImpl implements bookSearchDao {
     }
 
     @Override
-    public Long saveBookSuggestions(String title, String author, String isbn, Integer pages, Integer years_of_publication){
+    public Long saveFoundBook(String title, String author, String isbn, Integer pages, Integer years_of_publication){
         String sql = """
-                insert into book_suggestions
+                insert into found_book
                 (title, author, isbn, pages,year_of_publishing)
                 values(?,?,?,?,?)
                 on conflict (isbn) do update
                 set isbn = excluded.isbn
-                returning book_suggestion_id;
+                returning found_book_id;
                 """;
 
         return jdbcTemplate.queryForObject(
@@ -37,14 +37,13 @@ public class bookSearchDaoImpl implements bookSearchDao {
     }
 
     @Override
-    public void deleteSuggestions() {
+    public void deleteFoundBooks() {
         jdbcTemplate.update("""
-            DELETE FROM book_suggestions WHERE saved_at < NOW() - INTERVAL '1 minutes'
+            DELETE FROM found_book WHERE saved_at < NOW() - INTERVAL '1 minutes'
             """);
     }
 
 }
-
 
 
 

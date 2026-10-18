@@ -6,6 +6,6 @@ import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookS
 
 public interface bookSearchDao {
 
-    public Long saveBookSuggestions(String title, String author, String isbn, Integer pages, Integer years_of_publishing);
-    void deleteSuggestions();
+    public Long saveFoundBook(String title, String author, String isbn, Integer pages, Integer years_of_publishing);
+    void deleteFoundBooks();
 }

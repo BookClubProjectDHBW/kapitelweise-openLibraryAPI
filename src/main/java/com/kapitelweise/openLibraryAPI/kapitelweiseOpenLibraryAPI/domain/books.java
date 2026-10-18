@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "has_fulltext",
         "edition_count",
         "title",
-        "book_suggestion_id",
+        "found_book_id",
         "isbn",
         "number_of_pages_median",
         "author_name",
@@ -39,8 +39,8 @@ public class books {
     private Integer editionCount;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("book_suggestion_id")
-    private Long bookSuggestionId;
+    @JsonProperty("found_book_id")
+    private Long foundBookId;
     @JsonProperty("isbn")
     private List<String> isbn;
     @JsonProperty("editions")
@@ -128,14 +128,14 @@ public class books {
         return isbn;
     }
 
-    @JsonProperty("book_suggestion_id")
-    public Long getBookSuggestionId() {
-        return bookSuggestionId;
+    @JsonProperty("found_book_id")
+    public Long getFoundBookId() {
+        return foundBookId;
     }
 
-    @JsonProperty("book_suggestion_id")
-    public void setBookSuggestionId(Long bookSuggestionId) {
-        this.bookSuggestionId = bookSuggestionId;
+    @JsonProperty("found_book_id")
+    public void setFoundBookId(Long foundBookId) {
+        this.foundBookId = foundBookId;
     }
 
     @JsonProperty("isbn")
@@ -244,9 +244,9 @@ public class books {
         sb.append('=');
         sb.append(((this.title == null)?"<null>":this.title));
         sb.append(',');
-        sb.append("bookSuggestionId");
+        sb.append("foundBookId");
         sb.append('=');
-        sb.append(((this.bookSuggestionId == null)?"<null>":this.bookSuggestionId));
+        sb.append(((this.foundBookId == null)?"<null>":this.foundBookId));
         sb.append(',');
         sb.append("isbn");
         sb.append('=');
