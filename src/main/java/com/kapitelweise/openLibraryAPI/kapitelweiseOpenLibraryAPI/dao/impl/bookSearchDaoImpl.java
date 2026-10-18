@@ -15,16 +15,19 @@ public class bookSearchDaoImpl implements bookSearchDao {
     }
 
     @Override
-    public void saveBookSuggestions(String title, String author, String isbn, Integer pages, Integer years_of_publication){
+    public Long saveBookSuggestions(String title, String author, String isbn, Integer pages, Integer years_of_publication){
         String sql = """
                 insert into book_suggestions
                 (title, author, isbn, pages,year_of_publishing)
                 values(?,?,?,?,?)
-                on conflict (isbn) do nothing
+                on conflict (isbn) do update
+                set isbn = excluded.isbn
+                returning book_suggestion_id;
                 """;
 
-        jdbcTemplate.update(
+        return jdbcTemplate.queryForObject(
                 sql,
+                Long.class,
                 title,
                 author,
                 isbn,

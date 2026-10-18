@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "has_fulltext",
         "edition_count",
         "title",
+        "book_suggestion_id",
         "isbn",
         "number_of_pages_median",
         "author_name",
@@ -38,6 +39,8 @@ public class books {
     private Integer editionCount;
     @JsonProperty("title")
     private String title;
+    @JsonProperty("book_suggestion_id")
+    private Long bookSuggestionId;
     @JsonProperty("isbn")
     private List<String> isbn;
     @JsonProperty("editions")
@@ -123,6 +126,16 @@ public class books {
     @JsonProperty("isbn")
     public List<String> getIsbn() {
         return isbn;
+    }
+
+    @JsonProperty("book_suggestion_id")
+    public Long getBookSuggestionId() {
+        return bookSuggestionId;
+    }
+
+    @JsonProperty("book_suggestion_id")
+    public void setBookSuggestionId(Long bookSuggestionId) {
+        this.bookSuggestionId = bookSuggestionId;
     }
 
     @JsonProperty("isbn")
@@ -230,6 +243,10 @@ public class books {
         sb.append("title");
         sb.append('=');
         sb.append(((this.title == null)?"<null>":this.title));
+        sb.append(',');
+        sb.append("bookSuggestionId");
+        sb.append('=');
+        sb.append(((this.bookSuggestionId == null)?"<null>":this.bookSuggestionId));
         sb.append(',');
         sb.append("isbn");
         sb.append('=');

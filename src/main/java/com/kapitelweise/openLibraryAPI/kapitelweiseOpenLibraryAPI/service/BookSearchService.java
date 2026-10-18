@@ -68,7 +68,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                    if (book.getTitle() == null || book.getTitle().isBlank() || firstEditionIsbn(book) == null || firstEditionIsbn(book).isBlank()) {
                        continue;
                    }
-                   bookSearchDao.saveBookSuggestions(
+                   Long id = bookSearchDao.saveBookSuggestions(
                            book.getTitle(),
                            book.getAuthorName() == null || book.getAuthorName().isEmpty()
                            ? null
@@ -77,6 +77,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                            book.getNumberOfPagesMedian(),
                            book.getFirstPublishYear()
                    );
+                   book.setBookSuggestionId(id);
                }
            }
            return response;
