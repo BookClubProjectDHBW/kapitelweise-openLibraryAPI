@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "has_fulltext",
         "edition_count",
         "title",
+        "found_book_id",
         "isbn",
         "number_of_pages_median",
         "author_name",
@@ -38,8 +39,12 @@ public class books {
     private Integer editionCount;
     @JsonProperty("title")
     private String title;
+    @JsonProperty("found_book_id")
+    private Long foundBookId;
     @JsonProperty("isbn")
     private List<String> isbn;
+    @JsonProperty("editions")
+    private Editions editions;
     @JsonProperty("number_of_pages_median")
     private Integer numberOfPagesMedian;
     @JsonProperty("author_name")
@@ -123,9 +128,29 @@ public class books {
         return isbn;
     }
 
+    @JsonProperty("found_book_id")
+    public Long getFoundBookId() {
+        return foundBookId;
+    }
+
+    @JsonProperty("found_book_id")
+    public void setFoundBookId(Long foundBookId) {
+        this.foundBookId = foundBookId;
+    }
+
     @JsonProperty("isbn")
     public void setIsbn(List<String> isbn) {
         this.isbn = isbn;
+    }
+
+    @JsonProperty("editions")
+    public Editions getEditions() {
+        return editions;
+    }
+
+    @JsonProperty("editions")
+    public void setEditions(Editions editions) {
+        this.editions = editions;
     }
 
     @JsonProperty("number_of_pages_median")
@@ -218,6 +243,10 @@ public class books {
         sb.append("title");
         sb.append('=');
         sb.append(((this.title == null)?"<null>":this.title));
+        sb.append(',');
+        sb.append("foundBookId");
+        sb.append('=');
+        sb.append(((this.foundBookId == null)?"<null>":this.foundBookId));
         sb.append(',');
         sb.append("isbn");
         sb.append('=');
