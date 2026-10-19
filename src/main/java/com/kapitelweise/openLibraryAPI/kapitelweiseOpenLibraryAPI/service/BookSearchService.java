@@ -86,7 +86,6 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
            throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "OpenLibrary  not found");
        }
     }
-
     private String firstEditionIsbn(books book) {
         if (book.getEditions() == null || book.getEditions().getDocs() == null) {
             return null;
@@ -104,7 +103,6 @@ private void addIfPresent(UriBuilder uri, String param, String value){
             uri.queryParam(param, value);
         }
     }
-
 
     private static JdkClientHttpRequestFactory requestFactory() {
         var httpClient = HttpClient.newBuilder()
