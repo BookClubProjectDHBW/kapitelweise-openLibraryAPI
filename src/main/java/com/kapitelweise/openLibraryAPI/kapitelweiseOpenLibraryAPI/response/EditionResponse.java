@@ -1,11 +1,11 @@
-package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.domain;
+package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Edition {
+public class EditionResponse {
     @JsonProperty("isbn")
     private List<String> isbn;
 

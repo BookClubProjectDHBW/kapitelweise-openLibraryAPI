@@ -1,9 +1,9 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.service;
 
-import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.bookSearchDao;
-import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.domain.books;
-import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.request.BookSearchRequest;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.BookSearchDao;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookResponse;
 import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookSearchResponse;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.request.BookSearchRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ import java.time.Duration;
 @Service
 public class BookSearchService {
 
-    private final bookSearchDao bookSearchDao;
+    private final BookSearchDao bookSearchDao;
 
-    public BookSearchService(bookSearchDao bookSearchDao) {
+    public BookSearchService(BookSearchDao bookSearchDao) {
         this.bookSearchDao = bookSearchDao;
     }
 
@@ -46,7 +46,8 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                                .path("/search.json")
                                .queryParam("limit", 10)
                                .queryParam("language", lang)
-                               .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,editions,editions.isbn");
+                               // key muss mit abgefragt werden, sonst liefert OpenLibrary die editions (und damit die ISBN) leer zurück
+                               .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,cover_i,editions,editions.isbn");
 
                        addIfPresent(uri, "q", request.getQ());
                        addIfPresent(uri, "title", request.getTitle());
@@ -64,21 +65,23 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
 
            //Ruft DAO auf
            if (response != null && response.getDocs() != null) {
-               for (books book : response.getDocs()) {
-                   if (book.getTitle() == null || book.getTitle().isBlank() || firstEditionIsbn(book) == null || firstEditionIsbn(book).isBlank()) {
+               for (BookResponse book : response.getDocs()) {
+                   String isbn = firstEditionIsbn(book);
+                   if (book.getTitle() == null || book.getTitle().isBlank() || isbn == null || isbn.isBlank()) {
                        continue;
                    }
                    Long id = bookSearchDao.saveFoundBook(
                            book.getTitle(),
-                           book.getAuthorName() == null || book.getAuthorName().isEmpty()
-                           ? null
-                           : book.getAuthorName().get(0),
-                           firstEditionIsbn(book),
-                           book.getNumberOfPagesMedian(),
+                           book.getAuthor(),
+                           isbn,
+                           book.getPages(),
                            book.getFirstPublishYear()
                    );
                    book.setFoundBookId(id);
+                   book.setIsbn(isbn);
                }
+               // Bücher ohne Titel oder ISBN wurden oben übersprungen, können nicht vorgeschlagen werden und gehen deshalb nicht ans Frontend
+               response.getDocs().removeIf(book -> book.getFoundBookId() == null);
            }
            return response;
        }
@@ -86,7 +89,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
            throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "OpenLibrary  not found");
        }
     }
-    private String firstEditionIsbn(books book) {
+    private String firstEditionIsbn(BookResponse book) {
         if (book.getEditions() == null || book.getEditions().getDocs() == null) {
             return null;
         }

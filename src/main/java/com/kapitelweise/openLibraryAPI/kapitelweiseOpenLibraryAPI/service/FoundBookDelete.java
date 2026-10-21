@@ -1,6 +1,6 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.service;
 
-import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.bookSearchDao;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.BookSearchDao;
 
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class FoundBookDelete {
 
-    private final bookSearchDao bookSearchDao;
+    private final BookSearchDao bookSearchDao;
 
-    public FoundBookDelete(bookSearchDao bookSearchDao) {
+    public FoundBookDelete(BookSearchDao bookSearchDao) {
         this.bookSearchDao = bookSearchDao;
     }
 
