@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tmpcheck.BooksJsonCheckTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-21T21:42:12.096Z" hostname="Mac.fritz.box" time="0.109">
-  <properties/>
-  <testcase name="check()" classname="tmpcheck.BooksJsonCheckTest" time="0.104"/>
-  <system-out><![CDATA[OUT>> {"docs":[{"foundBookId":16,"title":"The Hobbit","author":"Gregory Bassham, Eric Bronson","isbn":"9783423202770","pages":310,"firstPublishYear":1937,"coverId":14627509}]}
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
