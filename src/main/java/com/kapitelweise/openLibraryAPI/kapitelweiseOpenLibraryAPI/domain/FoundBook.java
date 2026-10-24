@@ -1,6 +1,5 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.domain;
 
-// ein Buch aus der Tabelle found_book
 public class FoundBook {
     private String title;
     private String author;

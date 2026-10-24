@@ -10,5 +10,4 @@ CREATE TABLE IF NOT EXISTS found_book (
                       saved_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- für bestehende Datenbanken: Platz für mehrere Autoren (werden mit Komma zusammengefasst)
 ALTER TABLE found_book ALTER COLUMN author TYPE VARCHAR(255);

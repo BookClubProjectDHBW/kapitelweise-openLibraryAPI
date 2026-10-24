@@ -46,7 +46,6 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                                .path("/search.json")
                                .queryParam("limit", 10)
                                .queryParam("language", lang)
-                               // key muss mit abgefragt werden, sonst liefert OpenLibrary die editions (und damit die ISBN) leer zurück
                                .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,cover_i,editions,editions.isbn");
 
                        addIfPresent(uri, "q", request.getQ());
@@ -80,7 +79,6 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                    book.setFoundBookId(id);
                    book.setIsbn(isbn);
                }
-               // Bücher ohne Titel oder ISBN wurden oben übersprungen, können nicht vorgeschlagen werden und gehen deshalb nicht ans Frontend
                response.getDocs().removeIf(book -> book.getFoundBookId() == null);
            }
            return response;
