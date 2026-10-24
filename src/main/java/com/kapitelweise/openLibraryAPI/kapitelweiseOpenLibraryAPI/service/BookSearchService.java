@@ -37,6 +37,13 @@ public class BookSearchService {
 private static final Logger log = LoggerFactory.getLogger(BookSearchService.class);
 
     public BookSearchResponse searchBooks(BookSearchRequest request) {
+       if ((request.getQ() == null || request.getQ().isBlank())
+               && (request.getTitle() == null || request.getTitle().isBlank())
+               && (request.getAuthor() == null || request.getAuthor().isBlank())
+               && (request.getIsbn() == null || request.getIsbn().isBlank())) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bitte gib einen Suchbegriff ein");
+       }
+
        try {
            BookSearchResponse response = restClient.get()
                    .uri(uriBuilder -> {
