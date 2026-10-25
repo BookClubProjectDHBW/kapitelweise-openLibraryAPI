@@ -88,6 +88,9 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                }
                response.getDocs().removeIf(book -> book.getFoundBookId() == null);
            }
+           if(response != null && response.getDocs() != null && response.getDocs().isEmpty()) {
+               throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No books found");
+           }
            return response;
        }
        catch(ResourceAccessException e){
