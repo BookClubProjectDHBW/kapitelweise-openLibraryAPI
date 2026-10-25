@@ -1,5 +1,5 @@
 server:
-  port: 8383
+  port: 8484
 
 spring:
   application:
@@ -12,7 +12,15 @@ spring:
       mode: always
       platform: postgres
   profiles:
-    active: standard
+    active: niklas
+
+
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAY3L2M2AWGTQQ37PP
+      secret-key: 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
 
 
 app:

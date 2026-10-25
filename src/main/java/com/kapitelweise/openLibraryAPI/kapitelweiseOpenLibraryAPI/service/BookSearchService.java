@@ -1,7 +1,9 @@
 package com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.service;
 
-import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.request.BookSearchRequest;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.dao.BookSearchDao;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookResponse;
 import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.response.BookSearchResponse;
+import com.kapitelweise.openLibraryAPI.kapitelweiseOpenLibraryAPI.request.BookSearchRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,12 @@ import java.time.Duration;
 @Service
 public class BookSearchService {
 
+    private final BookSearchDao bookSearchDao;
+
+    public BookSearchService(BookSearchDao bookSearchDao) {
+        this.bookSearchDao = bookSearchDao;
+    }
+
 
     private final RestClient restClient = RestClient.builder()
             .requestFactory(requestFactory())
@@ -29,15 +37,23 @@ public class BookSearchService {
 private static final Logger log = LoggerFactory.getLogger(BookSearchService.class);
 
     public BookSearchResponse searchBooks(BookSearchRequest request) {
+       if ((request.getQ() == null || request.getQ().isBlank())
+               && (request.getTitle() == null || request.getTitle().isBlank())
+               && (request.getAuthor() == null || request.getAuthor().isBlank())
+               && (request.getIsbn() == null || request.getIsbn().isBlank())) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bitte gib einen Suchbegriff ein");
+       }
+
        try {
-           return restClient.get()
+           BookSearchResponse response = restClient.get()
                    .uri(uriBuilder -> {
                        var uri = uriBuilder
                                .scheme("https")
                                .host("openlibrary.org")
                                .path("/search.json")
-                               .queryParam("limit", 1)
-                               .queryParam("language", lang);
+                               .queryParam("limit", 10)
+                               .queryParam("language", lang)
+                               .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,cover_i,editions,editions.isbn");
 
                        addIfPresent(uri, "q", request.getQ());
                        addIfPresent(uri, "title", request.getTitle());
@@ -52,12 +68,42 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                    })
                    .retrieve()
                    .body(BookSearchResponse.class);
+
+           //Ruft DAO auf
+           if (response != null && response.getDocs() != null) {
+               for (BookResponse book : response.getDocs()) {
+                   String isbn = firstEditionIsbn(book);
+                   if (book.getTitle() == null || book.getTitle().isBlank() || isbn == null || isbn.isBlank()) {
+                       continue;
+                   }
+                   Long id = bookSearchDao.saveFoundBook(
+                           book.getTitle(),
+                           book.getAuthor(),
+                           isbn,
+                           book.getPages(),
+                           book.getFirstPublishYear()
+                   );
+                   book.setFoundBookId(id);
+                   book.setIsbn(isbn);
+               }
+               response.getDocs().removeIf(book -> book.getFoundBookId() == null);
+           }
+           return response;
        }
        catch(ResourceAccessException e){
            throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "OpenLibrary  not found");
        }
-
-
+    }
+    private String firstEditionIsbn(BookResponse book) {
+        if (book.getEditions() == null || book.getEditions().getDocs() == null) {
+            return null;
+        }
+        for (var edition : book.getEditions().getDocs()) {
+            if (edition.getIsbn() != null && !edition.getIsbn().isEmpty()) {
+                return edition.getIsbn().get(0);
+            }
+        }
+        return null;
     }
 
 private void addIfPresent(UriBuilder uri, String param, String value){
@@ -65,7 +111,6 @@ private void addIfPresent(UriBuilder uri, String param, String value){
             uri.queryParam(param, value);
         }
     }
-
 
     private static JdkClientHttpRequestFactory requestFactory() {
         var httpClient = HttpClient.newBuilder()
