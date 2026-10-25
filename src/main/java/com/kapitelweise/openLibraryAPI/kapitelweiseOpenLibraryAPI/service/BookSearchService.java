@@ -114,10 +114,10 @@ private void addIfPresent(UriBuilder uri, String param, String value){
 
     private static JdkClientHttpRequestFactory requestFactory() {
         var httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(7))
+                .connectTimeout(Duration.ofSeconds(5))
                 .build();
         var factory = new JdkClientHttpRequestFactory(httpClient);
-        factory.setReadTimeout(Duration.ofSeconds(7));
+        factory.setReadTimeout(Duration.ofSeconds(5));
         return factory;
     }
 
