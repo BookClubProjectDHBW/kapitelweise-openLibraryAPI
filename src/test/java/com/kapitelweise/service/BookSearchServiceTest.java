@@ -178,4 +178,22 @@ class BookSearchServiceTest {
         verifyNoInteractions(bookSearchDao);
         server.verify();
     }
+
+@Test
+void buchOhneTitelWirdNichtGespeichert() {
+    server.expect(requestTo(containsString("title=Unbekannt")))
+            .andRespond(withSuccess("""
+                    {"docs":[{"editions":{"docs":[
+                    {"isbn":["9780261103344"]}
+                    ]}}]}
+                    """, MediaType.APPLICATION_JSON));
+
+    BookSearchResponse result = service.searchBooks(
+            new BookSearchRequest(null, "Unbekannt", null, null));
+
+    assertTrue(result.getDocs().isEmpty());
+    verifyNoInteractions(bookSearchDao);
+    server.verify();
+}
+
 }
