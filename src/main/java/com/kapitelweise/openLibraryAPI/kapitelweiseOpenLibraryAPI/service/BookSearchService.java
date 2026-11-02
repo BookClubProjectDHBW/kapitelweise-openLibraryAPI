@@ -117,7 +117,7 @@ private void addIfPresent(UriBuilder uri, String param, String value){
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();
         var factory = new JdkClientHttpRequestFactory(httpClient);
-        factory.setReadTimeout(Duration.ofSeconds(5));
+        factory.setReadTimeout(Duration.ofSeconds(7));
         return factory;
     }
 
