@@ -50,7 +50,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean                                                          // NEU
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(allowedOrigins);

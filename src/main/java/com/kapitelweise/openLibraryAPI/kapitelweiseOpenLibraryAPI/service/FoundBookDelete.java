@@ -15,7 +15,7 @@ public class FoundBookDelete {
         this.bookSearchDao = bookSearchDao;
     }
 
-    // fixedRate: alle 60.000 Millisekunden wird das ausgeführt und geschaut ob ein Wert älter als 30 Minuten ist.
+    // fixedRate: alle 60.000 Millisekunden wird das ausgeführt und geschaut ob ein Wert älter als 10 Minuten ist.
     @Scheduled(fixedRate = 60000)
     public void deleteFoundBooks() {
         bookSearchDao.deleteFoundBooks();
