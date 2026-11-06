@@ -32,3 +32,6 @@ bin/
 ### Gradle ###
 .gradle/
 build/
+
+.idea/
+*.iml
