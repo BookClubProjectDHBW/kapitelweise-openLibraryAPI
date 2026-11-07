@@ -16,6 +16,7 @@ public class FoundBookDelete {
     }
 
     // fixedRate: alle 60.000 Millisekunden wird das ausgeführt und geschaut ob ein Wert älter als 10 Minuten ist.
+    //entwickelt mit der Unterstützung von KI
     @Scheduled(fixedRate = 60000)
     public void deleteFoundBooks() {
         bookSearchDao.deleteFoundBooks();
