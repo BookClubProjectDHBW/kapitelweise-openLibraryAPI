@@ -50,7 +50,8 @@ public class AmazonSQSService {
                     .withMessageBody(body)
                     .withMessageGroupId(String.valueOf(resultEvent.suggestionId()))
                     .withMessageDeduplicationId(String.valueOf(resultEvent.suggestionId()));
-            sqs.sendMessage(send);
+            String messageId = sqs.sendMessage(send).getMessageId();
+            log.info("SQS-Nachricht an suggestionResult.fifo gesendet (MessageId " + messageId + "): Vorschlag " + resultEvent.suggestionId() + " ist " + resultEvent.status() + ", Body: " + body);
         } catch (Exception e) {
             log.error("SuggestionResultEvent konnte nicht gesendet werden: " + e.getMessage() + resultEvent.suggestionId());
         }
