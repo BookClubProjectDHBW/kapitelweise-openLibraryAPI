@@ -17,6 +17,7 @@ public class BookSearchDaoImpl implements BookSearchDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // KI-Log Nr. 30
     @Override
     public Long saveFoundBook(String title, String author, String isbn, Integer pages, Integer years_of_publication){
         String sql = """
