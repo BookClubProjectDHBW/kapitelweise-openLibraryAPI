@@ -58,7 +58,7 @@ public class AmazonSQSService {
     }
 
 
-    // KI-Log Nr. 33
+    // KI-Log Nr. 36
     @Scheduled(fixedDelay = 1000)
     public void pollNewSuggestionCheck(){
         ReceiveMessageRequest request = new ReceiveMessageRequest()
