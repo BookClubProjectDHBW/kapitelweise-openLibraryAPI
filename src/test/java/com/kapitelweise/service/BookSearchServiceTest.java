@@ -35,7 +35,7 @@ class BookSearchServiceTest {
     private BookSearchService service;
     private MockRestServiceServer server;
 
-    // KI-Log Nr. 60
+    // KI-Log Nr. 61
     @BeforeEach
     void setUp() {
         bookSearchDao = mock(BookSearchDao.class);
@@ -69,7 +69,7 @@ class BookSearchServiceTest {
         server.verify();
     }
 
-    // KI-Log Nr. 60
+    // KI-Log Nr. 61
     @Test
     void titelSucheVerarbeitetTrefferUndSpeichertBuch() {
         server.expect(requestTo(containsString("title=Hobbit")))
@@ -155,7 +155,7 @@ class BookSearchServiceTest {
         server.verify();
     }
 
-    // KI-Log Nr. 60
+    // KI-Log Nr. 61
     @Test
     void nichtErreichbareApiLiefertGatewayTimeout() {
         server.expect(requestTo(containsString("title=Hobbit")))

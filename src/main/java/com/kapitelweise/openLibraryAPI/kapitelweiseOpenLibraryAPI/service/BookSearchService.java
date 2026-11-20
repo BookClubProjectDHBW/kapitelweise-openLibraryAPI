@@ -46,7 +46,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
 
        try {
            BookSearchResponse response = restClient.get()
-                   // KI-Log Nr. 22
+                   // KI-Log Nr. 23
                    .uri(uriBuilder -> {
                        var uri = uriBuilder
                                .scheme("https")
@@ -56,7 +56,7 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
                                .queryParam("language", lang)
                                .queryParam("fields", "key,title,author_name,first_publish_year,number_of_pages_median,cover_i,editions,editions.isbn");
 
-                       // KI-Log Nr. 22
+                       // KI-Log Nr. 23
                        addIfPresent(uri, "q", request.getQ());
                        addIfPresent(uri, "title", request.getTitle());
                        addIfPresent(uri, "author", request.getAuthor());
@@ -108,14 +108,14 @@ private static final Logger log = LoggerFactory.getLogger(BookSearchService.clas
         return null;
     }
 
-// KI-Log Nr. 22
+// KI-Log Nr. 23
 private void addIfPresent(UriBuilder uri, String param, String value){
         if (value != null && !value.isBlank()) {
             uri.queryParam(param, value);
         }
     }
 
-    // KI-Log Nr. 23
+    // KI-Log Nr. 24
     private static JdkClientHttpRequestFactory requestFactory() {
         var httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))

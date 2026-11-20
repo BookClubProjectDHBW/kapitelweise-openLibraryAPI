@@ -16,7 +16,7 @@ public class FoundBookDelete {
     }
 
     // fixedRate: alle 60.000 Millisekunden wird das ausgeführt und geschaut ob ein Wert älter als 10 Minuten ist.
-    // KI-Log Nr. 27
+    // KI-Log Nr. 28
     @Scheduled(fixedRate = 60000)
     public void deleteFoundBooks() {
         bookSearchDao.deleteFoundBooks();
